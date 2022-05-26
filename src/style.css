@@ -97,6 +97,43 @@ html {
     top: 80px;
     text-align: center;
 }
+
+.sidebar {
+    height: 100%; 
+    width: 250px; 
+    position: fixed;
+    transition: 0.4s ease-in-out; 
+    top: 0;
+    left: -250px;
+    background-color: rgba(39, 39, 39, 1);
+    overflow-x: hidden;
+    padding-top: 60px;
+}
+
+.sidebar.is-active {
+    left: 0;
+    transition: 0.4s ease-in-out; 
+}
+    
+.normal-text {
+    font-family: "Futura";
+    font-size: 20px;
+    text-align:center;
+    color: rgb(233, 233, 233);
+}
+
+.input-field {
+    font-family: "Futura";
+    font-size: 20px;
+    text-align:center;
+    color: rgb(233, 233, 233);
+    position: relative;
+    background-color: rgba(0, 0, 0, 0);
+    border: 2px solid;
+    border-radius: 6px;
+    display: block;
+    margin : 0 auto;
+}
    
 #title-bar {
     -webkit-app-region: drag;
@@ -132,6 +169,24 @@ html {
     border: none;
 }
 
-#min-btn:hover, #close-btn:hover {
+#option-btn {
+    animation: 1.5s ease-out 0s 1 fadeIn;
+    transition: color 0.3s ease;
+    transition: left 0.4s ease-in-out;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(39, 39, 39, 1);
+    font-family: "Futura";
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+    padding: 7px 10px;
+    border: none;
+    -webkit-app-region: no-drag;
+    position: fixed;
+    top: 6px;
+    left: 6px;
+}
+
+#min-btn:hover, #close-btn:hover, #option-btn:hover {
     color: rgb(233, 233, 233);
 }
