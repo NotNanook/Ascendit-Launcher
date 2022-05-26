@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="style.css" rel="stylesheet">
+        <script>
+            var lFollowX = 0,
+                lFollowY = 0,
+                x = 0,
+                y = 0,
+                range = 2000,
+                friction = 1 / 6;
+            
+            function moveBackground() {
+                x += (lFollowX - x) * friction;
+                y += (lFollowY - y) * friction;
+                translate = 'translate(' + x + 'px, ' + y + 'px) scale(1.1)';
+                document.getElementById("bg").style.transform = translate;
+                window.requestAnimationFrame(moveBackground);
+            }
+        
+            function handleMouseMove(e) {
+                var lMouseX = Math.max(-range, 
+                Math.min(range, window.innerWidth / 2 - e.clientX));
+                var lMouseY = Math.max(-range,
+                Math.min(range, window.innerHeight / 2 - e.clientY));
+                lFollowX = (20 * lMouseX) / range;
+                lFollowY = (20 * lMouseY) / range;
+            }
+        
+            function injectRaot() {
+                const injector = require('dll-inject');
+
+                if (injector.isProcessRunning('raot.exe')) {
+                    const error = injector.inject('raot.exe', './dlls/raotClient.dll');
+                }
+
+                if (!error) {
+                    console.log('Successfully injected!');
+                } else {
+                    console.log('Injection failed. Error Code:', error);
+                }
+            }
+
+            function load() {
+                const animated = document.getElementById("raot-button");
+                animated.style.visibility = "hidden";
+
+                animated.addEventListener('animationend', () => {
+                    animated.style.visibility = "visible";
+                });
+
+                const ipc = require("electron").ipcRenderer;
+
+                document.getElementById("min-btn").addEventListener("click", event => {
+                    ipc.send("min");
+                });
+
+                document.getElementById("close-btn").addEventListener("click", event => {
+                    ipc.send("close");
+                });
+                
+                window.onmousemove = handleMouseMove;
+                moveBackground();
+            }
+        </script>
+    </head>
+    <body onload="load()">
+        <div id="bg"></div>
+        <div id="title-bar">
+            <div id="title-bar-btns">
+                <button id="min-btn">-</button>
+                <button id="close-btn">x</button>
+            </div>
+       </div>
+        <p class="ascendit-name">Ascendit</p>
+        <p class="ascendit-desc">The only launcher you need</p>
+        <div class="wrapper" id="buttons">
+            <input type="button" class="button" value="Raot" id="raot-button" onclick="injectRaot();">
+        </div>
+    </body>
+</html>

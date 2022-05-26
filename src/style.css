@@ -1,0 +1,137 @@
+@font-face { font-family: Futura; src: url("file:///C:/Users/gabrys/Documents/Websites/AscenditLauncher/fonts/Futura.ttf"); } 
+
+@keyframes slideInFromBottom {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        visibility: visible;
+        color: rgba(39, 39, 39, 0);
+    }
+    100% {
+        color: rgba(39, 39, 39, 1);
+    }
+}
+
+#bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background: url("file:///C:/Users/gabrys/Documents/Websites/AscenditLauncher/img/background.jpg") no-repeat center center;
+    background-size: cover;
+    transform: scale(1.1);
+}
+
+body {
+    background: url("file:///C:/Users/gabrys/Documents/Websites/AscenditLauncher/img/background.jpg");
+    background-size: 1280px 720px;
+    color: white;
+    overflow: hidden;
+    margin: 0;
+  }
+
+html {
+    position: relative;
+    min-width: 1280px;
+    min-height: 720px;
+    height: 100%;
+}
+
+.ascendit-name {
+    animation: 1.5s ease-out 0s 1 slideInFromBottom,  1.5s ease-out 0s 1 fadeIn;
+    animation-fill-mode: forwards;
+
+    font-family: "Futura";
+    font-size: 40px;
+    text-align:center;
+    letter-spacing: 40px;
+    color: rgba(39, 39, 39, 0);
+    position: relative;
+    top: 70px;
+}
+
+.ascendit-desc {
+    animation: 1.5s ease-out 1s 1 slideInFromBottom,  1.5s ease-out 1s 1 fadeIn;
+    animation-fill-mode: forwards;
+
+    font-family: "Futura";
+    font-size: 15px;
+    text-align:center;
+    letter-spacing: 20px;
+    color: rgba(39, 39, 39, 0);
+    position: relative;
+    top: 70px;
+}
+
+.button {
+    animation: 1.5s ease-out 1.5s 1 fadeIn;
+    transition: color 0.3s ease;
+    background-color: rgba(0, 0, 0, 0);
+    border: 2px solid;
+    color: rgba(39, 39, 39, 1);
+    font-family: "Futura";
+    padding: 7px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 6px;
+}
+
+.button:hover {
+    color: rgb(233, 233, 233);
+}
+
+.wrapper {
+    animation: 1.5s ease-out 1.5s 1 slideInFromBottom;
+    position: relative;
+    top: 80px;
+    text-align: center;
+}
+   
+#title-bar {
+    -webkit-app-region: drag;
+    height: 34px; 
+    padding: none;
+    margin: 0px; 
+}
+   
+#title {
+    position: fixed;
+    top: 0px;
+    left: 6px; 
+}
+   
+#title-bar-btns {
+    -webkit-app-region: no-drag;
+    position: fixed;
+    top: 0px;
+    right: 6px;
+}
+
+#min-btn, #close-btn {
+    animation: 1.5s ease-out 0s 1 fadeIn;
+    transition: color 0.3s ease;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(39, 39, 39, 1);
+    font-family: "Futura";
+    padding: 7px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border: none;
+}
+
+#min-btn:hover, #close-btn:hover {
+    color: rgb(233, 233, 233);
+}
