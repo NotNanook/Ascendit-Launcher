@@ -21,19 +21,16 @@ const createWindow = () => {
     }
   });
 
-  ipcMain.on("min", () => {
+  ipcMain.on('min', () => {
     mainWindow.minimize()
   })
   
-  ipcMain.on("close", () => {
+  ipcMain.on('close', () => {
     mainWindow.close()
   })
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished

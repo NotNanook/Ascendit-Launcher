@@ -57,6 +57,10 @@ html {
     color: rgba(39, 39, 39, 0);
     position: relative;
     top: 70px;
+
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
 }
 
 .ascendit-desc {
@@ -70,6 +74,10 @@ html {
     color: rgba(39, 39, 39, 0);
     position: relative;
     top: 70px;
+
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
 }
 
 .button {
@@ -85,6 +93,11 @@ html {
     display: inline-block;
     font-size: 16px;
     border-radius: 6px;
+
+    outline: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
 }
 
 .button:hover {
@@ -105,9 +118,9 @@ html {
     transition: 0.4s ease-in-out; 
     top: 0;
     left: -250px;
-    background-color: rgba(39, 39, 39, 1);
     overflow-x: hidden;
-    padding-top: 60px;
+    padding-top: 45px;
+    background-color: rgba(233, 233, 233, 0.064);
 }
 
 .sidebar.is-active {
@@ -117,22 +130,56 @@ html {
     
 .normal-text {
     font-family: "Futura";
-    font-size: 20px;
-    text-align:center;
-    color: rgb(233, 233, 233);
+    font-size: 15px;
+    text-align: center;
+    color: rgba(39, 39, 39);
+    margin-bottom: 5px;
+
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
 }
 
 .input-field {
     font-family: "Futura";
-    font-size: 20px;
+    font-size: 15px;
     text-align:center;
-    color: rgb(233, 233, 233);
+    color: rgba(39, 39, 39);
     position: relative;
     background-color: rgba(0, 0, 0, 0);
     border: 2px solid;
     border-radius: 6px;
     display: block;
     margin : 0 auto;
+
+    outline: none;
+}
+
+.save-button {
+    transition: color 0.3s ease;
+    background-color: rgba(0, 0, 0, 0);
+    border: 2px solid;
+    color: rgba(39, 39, 39, 1);
+    font-family: "Futura";
+    padding: 2px 70px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 6px;
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    top: 30px;
+
+    outline: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+.save-button:hover {
+    color: rgb(233, 233, 233);
 }
    
 #title-bar {
@@ -153,6 +200,10 @@ html {
     position: fixed;
     top: 0px;
     right: 6px;
+
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
 }
 
 #min-btn, #close-btn {
@@ -171,8 +222,7 @@ html {
 
 #option-btn {
     animation: 1.5s ease-out 0s 1 fadeIn;
-    transition: color 0.3s ease;
-    transition: left 0.4s ease-in-out;
+    transition: color 0.3s ease,  left 0.4s ease-in-out;
     background-color: rgba(0, 0, 0, 0);
     color: rgba(39, 39, 39, 1);
     font-family: "Futura";

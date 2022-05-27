@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="style.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href='style.css' rel='stylesheet'>
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
         <script>
             var lFollowX = 0,
                 lFollowY = 0,
@@ -12,12 +12,15 @@
                 friction = 1 / 6;
 
             var navOpened = false;
-            
+
+            var config = require('../config.json');
+            const fs = require('fs');
+
             function moveBackground() {
                 x += (lFollowX - x) * friction;
                 y += (lFollowY - y) * friction;
                 translate = 'translate(' + x + 'px, ' + y + 'px) scale(1.1)';
-                document.getElementById("bg").style.transform = translate;
+                document.getElementById('bg').style.transform = translate;
                 window.requestAnimationFrame(moveBackground);
             }
         
@@ -30,63 +33,85 @@
                 lFollowY = (20 * lMouseY) / range;
             }
 
-            function toggleNav() {
+            function toggleSidebar() {
                 if(navOpened) {
-                    document.getElementById("sidebar").classList.toggle("is-active");
-                    document.getElementById("option-btn").style.left = "6px";
+                    document.getElementById('sidebar').classList.toggle('is-active');
+                    document.getElementById('option-btn').style.left = '6px';
+                    saveChanges();
                 } else {
-                    document.getElementById("sidebar").classList.toggle("is-active");
-                    document.getElementById("option-btn").style.left = "250px";
+                    document.getElementById('sidebar').classList.toggle('is-active');
+                    document.getElementById('option-btn').style.left = '250px';
                 }
 
                 navOpened = !navOpened;
             }
+
+            function initializeSidebar() {
+                document.getElementById('raot-input').value = config.raot.path;
+            }
+
+            function saveChanges() {
+                config.raot.path = document.getElementById('raot-input').value;
+
+                const data = JSON.stringify(config, null, 4);
+                fs.writeFile('config.json', data, (err) => {
+                    if (err) {
+                        throw err;
+                    }
+                }); 
+            }
         
-            function injectRaot() {}
+            function injectRaot() {
+                saveChanges();
+            }
 
             function load() {
-                const animated = document.getElementById("raot-button");
-                animated.style.visibility = "hidden";
+                const animated = document.getElementById('raot-button');
+                animated.style.visibility = 'hidden';
 
                 animated.addEventListener('animationend', () => {
-                    animated.style.visibility = "visible";
+                    animated.style.visibility = 'visible';
                 });
 
-                const ipc = require("electron").ipcRenderer;
+                const ipc = require('electron').ipcRenderer;
 
-                document.getElementById("min-btn").addEventListener("click", event => {
-                    ipc.send("min");
+                document.getElementById('min-btn').addEventListener('click', event => {
+                    saveChanges();
+                    ipc.send('min');
                 });
 
-                document.getElementById("close-btn").addEventListener("click", event => {
-                    ipc.send("close");
+                document.getElementById('close-btn').addEventListener('click', event => {
+                    saveChanges();
+                    ipc.send('close');
                 });
                 
                 window.onmousemove = handleMouseMove;
                 moveBackground();
+
+                initializeSidebar();
             }
         </script>
     </head>
-    <body onload="load()">
-        <div id="bg"></div>
+    <body onload='load()'>
+        <div id='bg'></div>
 
-        <div id="title-bar">
-            <button id="option-btn" onclick="toggleNav();"><i class="fa fa-bars"></i></button>
-            <div id="title-bar-btns">
-                <button id="min-btn">-</button>
-                <button id="close-btn">x</button>
+        <div id='title-bar'>
+            <button id='option-btn' onclick='toggleSidebar();'><i class='fa fa-bars'></i></button>
+            <div id='title-bar-btns'>
+                <button id='min-btn'>-</button>
+                <button id='close-btn'>x</button>
             </div>
        </div>
 
-        <p class="ascendit-name">Ascendit</p>
-        <p class="ascendit-desc">The only launcher you need</p>
-        <div class="wrapper" id="buttons">
-            <input type="button" class="button" value="Raot" id="raot-button" onclick="injectRaot();">
+        <p class='ascendit-name'>Ascendit</p>
+        <p class='ascendit-desc'>The only launcher you need</p>
+        <div class='wrapper' id='buttons'>
+            <input type='button' class='button' value='Raot' id='raot-button' onclick='injectRaot();'>
         </div>
 
-        <div class="sidebar" id="sidebar">
-            <div class="normal-text">Raot full path</div>
-            <input type="text" class="input-field"></input>
+        <div class='sidebar' id='sidebar'>
+            <div class='normal-text'>Raot full path</div>
+            <input type='text' class='input-field' id='raot-input'></input>
         </div>
     </body>
 </html>
