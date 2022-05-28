@@ -15,6 +15,8 @@
 
             var config = require('../config.json');
             const fs = require('fs');
+            const os = require("os");
+            var injector = require('../nodedllinject');
 
             function moveBackground() {
                 x += (lFollowX - x) * friction;
@@ -63,6 +65,37 @@
         
             function injectRaot() {
                 saveChanges();
+                if(config.raot.execute == true) {
+                    if(config.raot.path.localeCompare('default') == 0) {
+                        const userName = os.userInfo().username;
+                        const path = 'C:/Users/' + userName + '/AppData/Local/RAoT/raot.exe';
+                        injector.execute(path);
+                    } else {
+                        injector.execute(config.raot.path);
+                    }
+                }
+                
+                var result = injector.inject(__dirname + "/dlls/Ascendit-Raot.dll", "raot.exe");
+                switch(result) {
+                    case 1:
+                        console.log("Failed to open target process");
+                        break;
+                    case 2:
+                        console.log("Failed to allocate memory in target process");
+                        break;
+                    case 3:
+                        console.log("Failed to write in target process memory");
+                        break;
+                    case 4:
+                        console.log("Failed to create remote thread");
+                        break;
+                    case 5:
+                        console.log("Successful injection");
+                        break;
+                    case 6:
+                        console.log("This shouldnt be possible");
+                        break;
+                }
             }
 
             function load() {
