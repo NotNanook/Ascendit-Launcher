@@ -18,3 +18,8 @@
 - Automatically executes and injects cheat into a supported game
 - Modify default path and auto-execute in `config.json`
 - All open source
+
+# Todo
+- Remake in native C++/c#
+- DLL-Streaming
+- Account System
