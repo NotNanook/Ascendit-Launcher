@@ -1,63 +1,14 @@
 {
-  "name": "Ascendit Launcher",
-  "productName": "Ascendit Launcher",
-  "version": "1.0.0",
-  "description": "The official Ascendit Launcher",
-  "main": "src/index.js",
+  "name": "Ascendit-Launcher",
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
-  },
-  "keywords": [],
-  "author": {
-    "name": "NotNanook",
-    "email": "gogabrys@gmail.com"
-  },
-  "license": "MIT",
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "icon": "img/LogoSmall.png"
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "ascendit_launcher"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ]
-    }
+    "tauri": "tauri",
+    "localhost": "./node_modules/.bin/servor dist index.html 8080 --reload"
   },
   "dependencies": {
-    "dll-inject": "^0.0.1",
-    "electron-squirrel-startup": "^1.0.0",
-    "electron-store": "^8.0.1"
+    "@tauri-apps/api": "^1.0.2",
+    "servor": "^4.0.2"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.63",
-    "@electron-forge/maker-deb": "^6.0.0-beta.63",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
-    "@electron-forge/maker-zip": "^6.0.0-beta.63",
-    "electron": "18.3.0",
-    "electron-packager": "^15.5.1"
+    "@tauri-apps/cli": "^1.0.4"
   }
 }

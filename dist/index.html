@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html>
+
+<html lang='en'>
     <head>
+        <meta charset='UTF-8' />
+        <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
         <link href='style.css' rel='stylesheet'>
         <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
         <script>
+            var appWindow = window.__TAURI__.window.appWindow
+            var invoke = window.__TAURI__.invoke
+
             var lFollowX = 0,
                 lFollowY = 0,
                 x = 0,
                 y = 0,
-                range = 2000,
-                friction = 1 / 6;
+                range = 1000,
+                friction = 1 / 50;
 
             var navOpened = false;
-
-            var config = require('../config.json');
-            const fs = require('fs');
-            const os = require("os");
-            var injector = require('../nodedllinject');
 
             function moveBackground() {
                 x += (lFollowX - x) * friction;
@@ -31,15 +33,14 @@
                 Math.min(range, window.innerWidth / 2 - e.clientX));
                 var lMouseY = Math.max(-range,
                 Math.min(range, window.innerHeight / 2 - e.clientY));
-                lFollowX = (20 * lMouseX) / range;
-                lFollowY = (20 * lMouseY) / range;
+                lFollowX = (7 * lMouseX) / range;
+                lFollowY = (7 * lMouseY) / range;
             }
 
             function toggleSidebar() {
                 if(navOpened) {
                     document.getElementById('sidebar').classList.toggle('is-active');
                     document.getElementById('option-btn').style.left = '6px';
-                    saveChanges();
                 } else {
                     document.getElementById('sidebar').classList.toggle('is-active');
                     document.getElementById('option-btn').style.left = '250px';
@@ -49,53 +50,16 @@
             }
 
             function initializeSidebar() {
-                document.getElementById('raot-input').value = config.raot.path;
+                document.getElementById('raot-input').value = 'default';
             }
 
             function saveChanges() {
-                config.raot.path = document.getElementById('raot-input').value;
-
-                const data = JSON.stringify(config, null, 4);
-                fs.writeFile('config.json', data, (err) => {
-                    if (err) {
-                        throw err;
-                    }
-                }); 
+                //config.raot.path = document.getElementById('raot-input').value;
             }
         
             function injectRaot() {
-                saveChanges();
-                if(config.raot.execute == true) {
-                    if(config.raot.path.localeCompare('default') == 0) {
-                        const userName = os.userInfo().username;
-                        const path = 'C:/Users/' + userName + '/AppData/Local/RAoT/raot.exe';
-                        injector.execute(path);
-                    } else {
-                        injector.execute(config.raot.path);
-                    }
-                }
-                
-                var result = injector.inject(__dirname + "/dlls/Ascendit-Raot.dll", "raot.exe");
-                switch(result) {
-                    case 1:
-                        console.log("Failed to open target process");
-                        break;
-                    case 2:
-                        console.log("Failed to allocate memory in target process");
-                        break;
-                    case 3:
-                        console.log("Failed to write in target process memory");
-                        break;
-                    case 4:
-                        console.log("Failed to create remote thread");
-                        break;
-                    case 5:
-                        console.log("Successful injection");
-                        break;
-                    case 6:
-                        console.log("This shouldnt be possible");
-                        break;
-                }
+                invoke('save_changes')
+                invoke('inject_raot')
             }
 
             function load() {
@@ -105,19 +69,9 @@
                 animated.addEventListener('animationend', () => {
                     animated.style.visibility = 'visible';
                 });
-
-                const ipc = require('electron').ipcRenderer;
-
-                document.getElementById('min-btn').addEventListener('click', event => {
-                    saveChanges();
-                    ipc.send('min');
-                });
-
-                document.getElementById('close-btn').addEventListener('click', event => {
-                    saveChanges();
-                    ipc.send('close');
-                });
                 
+                document.getElementById('min-btn').addEventListener('click', () => appWindow.minimize())
+                document.getElementById('close-btn').addEventListener('click', () => appWindow.close())
                 window.onmousemove = handleMouseMove;
                 moveBackground();
 
@@ -128,7 +82,7 @@
     <body onload='load()'>
         <div id='bg'></div>
 
-        <div id='title-bar'>
+        <div data-tauri-drag-region id='title-bar'>
             <button id='option-btn' onclick='toggleSidebar();'><i class='fa fa-bars'></i></button>
             <div id='title-bar-btns'>
                 <button id='min-btn'>-</button>
@@ -143,8 +97,16 @@
         </div>
 
         <div class='sidebar' id='sidebar'>
-            <div class='normal-text'>Raot full path</div>
-            <input type='text' class='input-field' id='raot-input'></input>
+
+            <div class='raot-settings'>
+                <div class='normal-text-lines'>Raot</div>
+                <input type='text' class='input-field' id='raot-input'></input>
+            </div>
+
+            <div class='minecraft-settings'>
+                <div class='normal-text-lines'>Minecraft</div>
+                <input type='text' class='input-field' id='minecraft-input'></input>
+            </div>
         </div>
     </body>
 </html>
