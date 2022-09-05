@@ -19,3 +19,6 @@
 - Modify default path and auto-execute in `config.json`
 - Auto Update
 - Small binary size (fuck electron)
+
+# Building
+Make sure `npm` is installed -> run `npm run tauri build`
