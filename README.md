@@ -17,9 +17,8 @@
 # Features
 - Automatically executes and injects cheat into a supported game
 - Modify default path and auto-execute in `config.json`
-- All open source
+- Auto Update
+- Small binary size (fuck electron)
 
-# Todo
-- Remake in native C++/c#
-- DLL-Streaming
-- Account System
+# Building
+Make sure `npm` is installed -> run `npm run tauri build`
