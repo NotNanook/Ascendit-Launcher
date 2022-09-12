@@ -21,4 +21,6 @@
 - Small binary size (fuck electron)
 
 # Building
-Make sure `npm` is installed -> run `npm run tauri build`
+- Make sure `npm` is installed -> run `npm run tauri build`
+- Use the nightly build for rust
+
