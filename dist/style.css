@@ -32,9 +32,7 @@
 }
 
 body {
-    background: url("./img/background.jpg");
     background-size: 1280px 720px;
-    color: white;
     overflow: hidden;
     margin: 0;
   }
@@ -120,7 +118,6 @@ html {
     left: -250px;
     overflow-x: hidden;
     padding-top: 45px;
-    backdrop-filter: blur(5px);
 }
 
 .sidebar.is-active {
