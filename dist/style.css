@@ -1,6 +1,6 @@
 @font-face { font-family: Futura; src: url("./font/Futura.ttf"); } 
 
-@keyframes slideInFromBottom {
+@keyframes slide-in-from-bottom {
     0% {
       transform: translateY(100%);
     }
@@ -18,6 +18,96 @@
         color: rgba(39, 39, 39, 1);
     }
 }
+
+@keyframes fadeInWithStep {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOutWithStep {
+    0% {
+        opacity: 1;
+    }
+    40% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes slide-out-top {
+    0% {
+        -webkit-transform: translateY(0);
+                transform: translateY(0);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(-500px);
+                transform: translateY(-500px);
+        opacity: 0;
+    }
+}
+
+@keyframes slide-in-top {
+    0% {
+        -webkit-transform: translateY(-500px);
+                transform: translateY(-500px);
+    }
+    100% {
+        -webkit-transform: translateY(0);
+                transform: translateY(0);
+    }
+}
+
+@keyframes slide-out-bottom {
+    0% {
+        -webkit-transform: translateY(0);
+                transform: translateY(0);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(500px);
+                transform: translateY(500px);
+        opacity: 0;
+    }
+} 
+
+@keyframes slide-in-bottom {
+    0% {
+        -webkit-transform: translateY(500px);
+                transform: translateY(500px);
+    }
+    100% {
+        -webkit-transform: translateY(0);
+                transform: translateY(0);
+    }
+}
+  
+@keyframes slide-out-bottom {
+    0% {
+        -webkit-transform: translateY(0);
+                transform: translateY(0);
+    }
+    100% {
+        -webkit-transform: translateY(500px);
+                transform: translateY(500px);
+    }
+}
+
 
 #bg {
     width: 100%;
@@ -44,8 +134,8 @@ html {
     height: 100%;
 }
 
-.ascendit-name {
-    animation: 1.5s ease-out 0s 1 slideInFromBottom,  1.5s ease-out 0s 1 fadeIn;
+.title {
+    animation: 1.5s ease-out 0s 1 slide-in-from-bottom,  1.5s ease-out 0s 1 fadeIn;
     animation-fill-mode: forwards;
 
     font-family: "Futura";
@@ -61,8 +151,8 @@ html {
     cursor: default;
 }
 
-.ascendit-desc {
-    animation: 1.5s ease-out 1s 1 slideInFromBottom,  1.5s ease-out 1s 1 fadeIn;
+.desc {
+    animation: 1.5s ease-out 1s 1 slide-in-from-bottom,  1.5s ease-out 1s 1 fadeIn;
     animation-fill-mode: forwards;
 
     font-family: "Futura";
@@ -103,26 +193,10 @@ html {
 }
 
 .wrapper {
-    animation: 1.5s ease-out 1.5s 1 slideInFromBottom;
+    animation: 1.5s ease-out 1.5s 1 slide-in-from-bottom;
     position: relative;
     top: 80px;
     text-align: center;
-}
-
-.sidebar {
-    height: 100%; 
-    width: 250px; 
-    position: fixed;
-    transition: 0.4s ease-in-out; 
-    top: 0;
-    left: -250px;
-    overflow-x: hidden;
-    padding-top: 45px;
-}
-
-.sidebar.is-active {
-    left: 0;
-    transition: 0.4s ease-in-out; 
 }
     
 .normal-text {
@@ -137,102 +211,40 @@ html {
     cursor: default;
 }
 
-.normal-text-lines {
-    font-family: "Futura";
-    font-size: 15px;
-    color: rgba(39, 39, 39, 1);
-    overflow: hidden;
-    text-align: center;
-    margin-bottom: 7px;
-    user-select: none;
-}
-  
-.normal-text-lines:before,
-.normal-text-lines:after {
-    background-color: rgba(39, 39, 39, 1);
-    content: "";
-    display: inline-block;
-    height: 2px;
-    position: relative;
-    vertical-align: middle;
-    width: 60%;
-}
-  
-.normal-text-lines:before {
-    right: 0.5em;
-    margin-left: -50%;
-}
-  
-.normal-text-lines:after {
-    left: 0.5em;
-    margin-right: -50%;
-  }
-
-.input-field {
-    font-family: "Futura";
-    font-size: 15px;
-    text-align:center;
-    color: rgba(39, 39, 39);
-    position: relative;
-    background-color: rgba(0, 0, 0, 0);
-    border: 2px solid;
-    border-radius: 6px;
-    display: block;
-    margin : 0 auto;
-
-    outline: none;
+.slide-out-top {
+    animation: slide-out-top 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 }
 
-.save-button {
-    transition: color 0.3s ease;
-    background-color: rgba(0, 0, 0, 0);
-    border: 2px solid;
-    color: rgba(39, 39, 39, 1);
-    font-family: "Futura";
-    padding: 2px 70px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 6px;
-    position: relative;
-    display: block;
-    margin: 0 auto;
-    top: 30px;
-
-    outline: none;
-    -webkit-user-select: none;
-    user-select: none;
-    cursor: default;
+.slide-in-top {
+    animation: slide-in-top 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both, fadeInWithStep 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
-.save-button:hover {
-    color: rgb(233, 233, 233);
+.slide-in-bottom {
+    animation: slide-in-bottom 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both, fadeInWithStep 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
-.raot-settings {
-    text-align: center;
-    margin: 10px;
-    margin-bottom: 30px;
+.slide-out-bottom {
+    animation: slide-out-bottom 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both, fadeOutWithStep 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
-.minecraft-settings {
-    text-align: center;
-    margin: 10px;
-    margin-bottom: 30px;
-}
-   
+.hidden-screen {
+    position: absolute;
+    top: 500px;
+    visibility: hidden;
+} 
+
+.raot-screen-visible {
+    position: absolute;
+    visibility: visible;
+    top: 34px;
+    left: 20%;
+} 
+
 #title-bar {
     -webkit-app-region: drag;
     height: 34px; 
     padding: none;
     margin: 0px; 
-}
-   
-#title {
-    position: fixed;
-    top: 0px;
-    left: 6px; 
 }
    
 #title-bar-btns {
@@ -260,23 +272,9 @@ html {
     border: none;
 }
 
-#option-btn {
-    animation: 1.5s ease-out 0s 1 fadeIn;
-    transition: color 0.3s ease,  left 0.4s ease-in-out;
-    background-color: rgba(0, 0, 0, 0);
-    color: rgba(39, 39, 39, 1);
-    font-family: "Futura";
-    text-align: center;
-    text-decoration: none;
-    font-size: 12px;
-    padding: 7px 10px;
-    border: none;
-    -webkit-app-region: no-drag;
-    position: fixed;
-    top: 6px;
-    left: 6px;
-}
-
-#min-btn:hover, #close-btn:hover, #option-btn:hover {
+#min-btn:hover, #close-btn:hover {
     color: rgb(233, 233, 233);
 }
+
+#raot-screen {
+} 

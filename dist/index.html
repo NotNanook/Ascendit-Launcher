@@ -5,109 +5,35 @@
         <meta charset='UTF-8' />
         <meta http-equiv='X-UA-Compatible' content='IE=edge' />
         <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <script src="js/background.js"></script>
+        <script src="js/gameLaunching.js"></script>
         <link href='style.css' rel='stylesheet'>
         <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
-        <script>
-            var appWindow = window.__TAURI__.window.appWindow
-            var invoke = window.__TAURI__.invoke
-
-            var lFollowX = 0,
-                lFollowY = 0,
-                x = 0,
-                y = 0,
-                range = 1000,
-                friction = 1 / 50;
-
-            var navOpened = false;
-
-            function moveBackground() {
-                x += (lFollowX - x) * friction;
-                y += (lFollowY - y) * friction;
-                translate = 'translate(' + x + 'px, ' + y + 'px) scale(1.1)';
-                document.getElementById('bg').style.transform = translate;
-                window.requestAnimationFrame(moveBackground);
-            }
-        
-            function handleMouseMove(e) {
-                var lMouseX = Math.max(-range, 
-                Math.min(range, window.innerWidth / 2 - e.clientX));
-                var lMouseY = Math.max(-range,
-                Math.min(range, window.innerHeight / 2 - e.clientY));
-                lFollowX = (7 * lMouseX) / range;
-                lFollowY = (7 * lMouseY) / range;
-            }
-
-            function toggleSidebar() {
-                if(navOpened) {
-                    document.getElementById('sidebar').classList.toggle('is-active');
-                    document.getElementById('option-btn').style.left = '6px';
-                } else {
-                    document.getElementById('sidebar').classList.toggle('is-active');
-                    document.getElementById('option-btn').style.left = '250px';
-                }
-
-                navOpened = !navOpened;
-            }
-
-            function initializeSidebar() {
-                document.getElementById('raot-input').value = 'default';
-            }
-
-            function saveChanges() {
-                //config.raot.path = document.getElementById('raot-input').value;
-            }
-        
-            function injectRaot() {
-                invoke('save_changes')
-                invoke('inject_raot')
-            }
-
-            function load() {
-                const animated = document.getElementById('raot-button');
-                animated.style.visibility = 'hidden';
-
-                animated.addEventListener('animationend', () => {
-                    animated.style.visibility = 'visible';
-                });
-                
-                document.getElementById('min-btn').addEventListener('click', () => appWindow.minimize())
-                document.getElementById('close-btn').addEventListener('click', () => appWindow.close())
-                window.onmousemove = handleMouseMove;
-                moveBackground();
-
-                initializeSidebar();
-            }
-        </script>
     </head>
     <body onload='load()'>
-        <div id='bg'></div>
-
         <div data-tauri-drag-region id='title-bar'>
-            <button id='option-btn' onclick='toggleSidebar();'><i class='fa fa-bars'></i></button>
             <div id='title-bar-btns'>
                 <button id='min-btn'>-</button>
                 <button id='close-btn'>x</button>
             </div>
-       </div>
-
-        <p class='ascendit-name'>Ascendit</p>
-        <p class='ascendit-desc'>The only launcher you need</p>
-        <div class='wrapper' id='buttons'>
-            <input type='button' class='button' value='Raot' id='raot-button' onclick='injectRaot();'>
+        </div>
+        
+        <div id='bg'></div>
+        <div id='main-screen'>
+            <p class='title'>Ascendit</p>
+            <p class='desc'>The only launcher you need</p>
+            <div class='wrapper' id='buttons'>
+                <input type='button' class='button' value='Raot' id='raot-button' onclick='showRaotScreen()'>
+            </div>
         </div>
 
-        <div class='sidebar' id='sidebar'>
-
-            <div class='raot-settings'>
-                <div class='normal-text-lines'>Raot</div>
-                <input type='text' class='input-field' id='raot-input'></input>
+        <div id='raot-screen' class='hidden-screen'>
+            <p class='title'>Raot</p>
+            <p class='desc'>The Attack on Titan Fangame</p>
+            <div class='wrapper' id='buttons'>
+                <input type='button' class='button' value='Back' id='raot-play-button' onclick='raotBackToMenu()'>
+                <input type='button' class='button' value='Play' id='raot-play-button' onclick='executeInjectRaot()'>
             </div>
-
-            <div class='minecraft-settings'>
-                <div class='normal-text-lines'>Minecraft</div>
-                <input type='text' class='input-field' id='minecraft-input'></input>
-            </div>
-            
         </div>
     </body>
 </html>

@@ -59,9 +59,9 @@
         "decorations": false,
         "fullscreen": false,
         "height": 720,
+        "width": 1280,
         "resizable": false,
-        "title": "Ascendit Launcher",
-        "width": 1280
+        "title": "Ascendit Launcher"
       }
     ]
   }

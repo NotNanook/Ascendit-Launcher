@@ -23,6 +23,7 @@ reqwest = "0.11.11"
 directories = "4.0"
 sha256 = "1.0.3"
 whoami = "1.2.2"
+dll-syringe = "0.13.1"
 
 [features]
 # by default Tauri runs in production mode

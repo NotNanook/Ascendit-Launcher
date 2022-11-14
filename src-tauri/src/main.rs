@@ -8,6 +8,7 @@ use std::{io::{Cursor}, path::Path};
 use sha256::{digest_file};
 use serde_derive::{Deserialize, Serialize};
 use std::process::Command;
+use dll_syringe::{Syringe, process::OwnedProcess};
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>>;
 extern crate directories;
 use directories::{ProjectDirs};
@@ -31,7 +32,7 @@ struct ConfigFile {
 fn main() 
 {
   tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![inject_raot, save_changes])
+    .invoke_handler(tauri::generate_handler![launch_raot, save_changes])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }
@@ -113,20 +114,34 @@ fn find_path(game: String) -> String {
 }
 
 fn execute(path: String) {
-  Command::new(path).output().expect("Failed to execute process");
+  Command::new(path).spawn().expect("Failed to start game");
+}
+
+fn inject(process_name: &str, dll_name: &str) {
+  let target_process = OwnedProcess::find_first_by_name(process_name).unwrap();
+  let syringe = Syringe::for_process(target_process);
+
+  if let Some(proj_dirs) = ProjectDirs::from("", "",  "Ascendit Launcher") {
+    let proj_path= proj_dirs.data_dir();
+    let config_path_buf = proj_path.join(dll_name);
+    let config_path = config_path_buf.as_path();
+    
+    let _injected_payload = syringe.inject(config_path).unwrap();
+  }
 }
 
 #[tauri::command]
-async fn inject_raot()
+async fn launch_raot()
 {
   // check for updates
   check_update("https://v45600.1blu.de/launcherFiles/".to_string(), "Raot").await.unwrap();
   
   // find path and execute
-  let path: String = find_path("raot".to_owned());
-  execute(path);
-  
-  // inject
+  let path: String = find_path("raot".to_string());
+  if !(path == "".to_string()) {
+    execute(path);
+    inject("raot.exe", "Ascendit-Raot.dll");
+  }
 }
 
 #[tauri::command]
