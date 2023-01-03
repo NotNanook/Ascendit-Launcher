@@ -1,8 +1,9 @@
 <div align="center">
-  <a href="https://github.com/NotNanook/Ascendit-Launcher">
-    <img src="img/Logo.png" alt="Logo" width="500">
-  </a>
-  
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="img/Logo.png">
+    <img alt="Logo" src="img/LogoDark.png" width=500>
+  </picture>
+
   <h3 align="center">Ascendit Launcher</h3>
   
   <p align="center">A lauchner made in Tauri for all current Ascendit-based Clients</p>
