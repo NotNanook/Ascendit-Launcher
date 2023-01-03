@@ -5,7 +5,7 @@
   
   <h3 align="center">Ascendit Launcher</h3>
   
-  <p align="center">A lauchner made in Electron for all current Ascendit-based Clients</p>
+  <p align="center">A lauchner made in Tauri for all current Ascendit-based Clients</p>
   <br>
   
   <a href="https://github.com/NotNanook/Ascendit-Launcher">
